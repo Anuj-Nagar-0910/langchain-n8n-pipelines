@@ -1,0 +1,46 @@
+{
+  "name": "GPT Question Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "/data/input.txt"
+      },
+      "name": "Read Text File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/ask",
+        "method": "POST",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "{\"context\": \"={{$json[\\\"data\\\"]}}\"}"
+      },
+      "name": "Send to LangChain",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Read Text File": {
+      "main": [
+        [
+          {
+            "node": "Send to LangChain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
